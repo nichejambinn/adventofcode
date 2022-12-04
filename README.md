@@ -1,2 +1,2 @@
 # adventofcode
-Challenge submissions for Advent of Code
+Challenge submissions for Advent of Code 2022
