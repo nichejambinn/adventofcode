@@ -1,3 +1,8 @@
+import sys
+
+TOTAL_DISK_SPACE = 70000000
+UPDATE_SIZE = 30000000
+
 class Dir:
     def __init__(self, name, parent):
         self.name = name
@@ -98,7 +103,26 @@ def total_dir_size_below_limit(cwd, limit=100000):
     return total
 
 
+def smallest_dir_to_delete(cwd, space_needed):
+    min_dir = sys.maxsize
+    cwd_size = cwd.getSize()
+
+    if cwd_size >= space_needed:
+        min_dir = min(cwd_size, min_dir)
+
+    for dir in cwd.dirs:
+        min_dir = min(min_dir, smallest_dir_to_delete(dir, space_needed))
+
+    return min_dir
+
+
+
 if __name__=='__main__':
     root = read_filesystem('puzzle7')
     
-    print(total_dir_size_below_limit(root))
+    print(total_dir_size_below_limit(root)) # part 1
+
+    unused_space = TOTAL_DISK_SPACE - root.getSize()
+    space_needed = UPDATE_SIZE - unused_space
+    print(smallest_dir_to_delete(root, space_needed)) # part 2
+
