@@ -1,4 +1,3 @@
-import os
 from functools import reduce
 
 def find_num_visible_trees(forest):
